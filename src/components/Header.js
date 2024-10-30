@@ -41,18 +41,29 @@ const Header = () => {
         <nav className={`main-nav ${menuOpen ? "open" : ""}`}>
           <ul className="main-nav-list">
             <li>
-              <NavLink to="/" className="main-nav-link" onClick={closeMenu}>
+              <NavLink
+                to="/"
+                activeClassName="active"
+                className="main-nav-link"
+                onClick={closeMenu}
+              >
                 Home
               </NavLink>
             </li>
             <li>
-              <NavLink to="/menu" className="main-nav-link" onClick={closeMenu}>
+              <NavLink
+                to="/menu"
+                activeClassName="active"
+                className="main-nav-link"
+                onClick={closeMenu}
+              >
                 Menu
               </NavLink>
             </li>
             <li>
               <NavLink
                 to="/howitworks"
+                activeClassName="active"
                 className="main-nav-link"
                 onClick={closeMenu}
               >
@@ -62,6 +73,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/pricing"
+                activeClassName="active"
                 className="main-nav-link"
                 onClick={closeMenu}
               >
@@ -71,6 +83,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/cart"
+                activeClassName="active"
                 className="main-nav-link cart-icon-link"
                 onClick={closeMenu}
               >
@@ -81,11 +94,12 @@ const Header = () => {
                 )}
               </NavLink>
             </li>
-            {/* Conditionally render  if the user is logged in */}
+            {/* Conditionally render if the user is logged in */}
             {isLoggedIn && (
               <li>
                 <NavLink
                   to="/user"
+                  activeClassName="active"
                   className="main-nav-link"
                   onClick={closeMenu}
                 >
@@ -109,6 +123,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/login"
+                activeClassName="active"
                 className="main-nav-link nav-cta"
                 onClick={closeMenu}
               >

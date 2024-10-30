@@ -34,6 +34,12 @@
   transition: all 0.3s;
 }
 
+.main-nav-link.active {
+  font-weight: bold;
+  color: #cf711f;
+  border-bottom: 2px solid #e67e22;
+}
+
 .main-nav-link:hover,
 .main-nav-link:active {
   color: #cf711f;
@@ -51,6 +57,11 @@
 .main-nav-link.nav-cta:active {
   background-color: #cf711f;
 }
+
+/* .active-link {
+  font-weight: bold;
+  color: #cf711f;
+} */
 
 .menu-toggle {
   display: none;
