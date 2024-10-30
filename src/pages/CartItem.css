@@ -1,0 +1,146 @@
+.cart-page {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.cart-items {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.cart-item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-size: medium;
+  margin-top: 5px;
+}
+
+.cart-item-details h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.cart-item-details p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.cart-item-quantity {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.quantity-button {
+  background-color: #eb984e;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.quantity-button:hover {
+  background-color: #e67e22;
+}
+
+.quantityDelete-button {
+  background-color: #c82333;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  margin-left: 6rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.quantityDelete-button:hover {
+  background-color: #dc3545;
+}
+
+.quantity {
+  font-size: 1.2em;
+  margin: 0 15px;
+  color: #333;
+}
+
+.cart-total {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.cart-total h3 {
+  font-size: 1.5em;
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cart-item-img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+  }
+
+  .cart-item-quantity {
+    margin-top: 15px;
+  }
+}
+.links {
+  background-color: #eb984e;
+  color: white;
+  border: none;
+  margin-top: 8rem;
+  margin-left: 29rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.links:hover {
+  background-color: #e67e22;
+}
+
+.links:focus {
+  outline: none;
+}

@@ -1,0 +1,132 @@
+/* Base Styles (for large screens) */
+.reviews-section {
+  padding: 40px;
+  background-color: #f9f9f9;
+}
+
+.reviews-heading {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 6rem;
+  font-size: 2.5rem;
+  margin-bottom: 6rem;
+}
+
+.reviews-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.review-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.review-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.review-name {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.review-text {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: #555;
+}
+
+.review-rating {
+  display: flex;
+  justify-content: center;
+}
+
+.star-icon {
+  color: #ffc107;
+  font-size: 1.2rem;
+  margin: 0 2px;
+}
+
+/* Medium Screens (Tablets) */
+@media (max-width: 768px) {
+  .reviews-heading {
+    font-size: 2.2rem;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+  }
+
+  .reviews-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .review-card {
+    padding: 15px;
+  }
+
+  .review-name {
+    font-size: 1.5rem;
+  }
+
+  .review-text {
+    font-size: 1.1rem;
+  }
+
+  .star-icon {
+    font-size: 1rem;
+  }
+}
+
+/* Small Screens (Phones) */
+@media (max-width: 480px) {
+  .reviews-section {
+    padding: 15px;
+  }
+
+  .reviews-heading {
+    font-size: 1.8rem;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+
+  .reviews-container {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .review-card {
+    padding: 12px;
+  }
+
+  .review-img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+  }
+
+  .review-name {
+    font-size: 1.3rem;
+  }
+
+  .review-text {
+    font-size: 1rem;
+  }
+
+  .star-icon {
+    font-size: 0.9rem;
+  }
+}
