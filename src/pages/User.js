@@ -39,7 +39,10 @@ const User = () => {
       {isLoggedIn ? (
         userProfile ? (
           <div>
-            <h2>Welcome, {userProfile.name || "User"}!</h2>
+            <h2>
+              Welcome, <br />
+              {userProfile.name || "User"}!
+            </h2>
             <p>{userProfile.email || "No email provided"}</p>
           </div>
         ) : (

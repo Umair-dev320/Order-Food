@@ -189,6 +189,7 @@ export const AddToCartProvider = ({ children }) => {
   };
 
   const isLoggedIn = user ? true : false; // Login status
+  // const isLoggedOut = user ? false : true; // Logout status
 
   return (
     <AddToCartContext.Provider
@@ -203,8 +204,9 @@ export const AddToCartProvider = ({ children }) => {
         increaseQuantity,
         deleteItem,
         isLoggedIn,
-        signinWithGoogle,
+        // isLoggedOut,
         logout,
+        signinWithGoogle,
         loading,
         userProfile,
       }}

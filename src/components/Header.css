@@ -58,11 +58,6 @@
   background-color: #cf711f;
 }
 
-/* .active-link {
-  font-weight: bold;
-  color: #cf711f;
-} */
-
 .menu-toggle {
   display: none;
   background: none;
@@ -120,4 +115,32 @@
     font-size: 12px;
     font-weight: bold;
   }
+}
+
+.profile-container {
+  position: relative;
+}
+
+.profile-icon {
+  cursor: pointer;
+}
+
+.logout-dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logout-dropdown button {
+  background-color: transparent;
+  border: none;
+  color: #e67e22;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 14px;
 }

@@ -4,6 +4,8 @@ import { realtimeDb } from "../firebase/Firebase";
 import { ref, get } from "firebase/database";
 import "./Menu.css";
 
+const CACHE_EXPIRY_TIME = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
 const Menu = () => {
   const { addToCart } = useContext(AddToCartContext);
   const [meals, setMeals] = useState({
@@ -12,41 +14,50 @@ const Menu = () => {
     fastFoodMeals: [],
   });
 
-  useEffect(() => {
-    const fetchMeals = async () => {
-      try {
-        const vegetarianRef = ref(realtimeDb, "meals/vegetarian");
-        const desiRef = ref(realtimeDb, "meals/desi");
-        const fastFoodRef = ref(realtimeDb, "meals/fastfood");
+  const fetchMeals = async () => {
+    const vegetarianRef = ref(realtimeDb, "meals/vegetarian");
+    const desiRef = ref(realtimeDb, "meals/desi");
+    const fastFoodRef = ref(realtimeDb, "meals/fastfood");
 
-        // Fetch vegetarian meals
+    try {
+      const cachedMeals = JSON.parse(localStorage.getItem("meals"));
+      const cacheTime = localStorage.getItem("cacheTime");
+
+      // If cached data exists and is not expired, use it
+      if (
+        cachedMeals &&
+        cacheTime &&
+        Date.now() - cacheTime < CACHE_EXPIRY_TIME
+      ) {
+        setMeals(cachedMeals);
+      } else {
+        // Fetch data from Firebase
         const vegetarianSnapshot = await get(vegetarianRef);
-        const vegetarianData = vegetarianSnapshot.val();
-        setMeals((prev) => ({
-          ...prev,
-          vegetarianMeals: vegetarianData ? Object.values(vegetarianData) : [],
-        }));
-
-        // Fetch desi meals
         const desiSnapshot = await get(desiRef);
-        const desiData = desiSnapshot.val();
-        setMeals((prev) => ({
-          ...prev,
-          desiMeals: desiData ? Object.values(desiData) : [],
-        }));
-
-        // Fetch fast food meals
         const fastFoodSnapshot = await get(fastFoodRef);
-        const fastFoodData = fastFoodSnapshot.val();
-        setMeals((prev) => ({
-          ...prev,
-          fastFoodMeals: fastFoodData ? Object.values(fastFoodData) : [],
-        }));
-      } catch (error) {
-        console.error("Error fetching meals:", error);
-      }
-    };
 
+        const vegetarianData = vegetarianSnapshot.val();
+        const desiData = desiSnapshot.val();
+        const fastFoodData = fastFoodSnapshot.val();
+
+        const formattedMeals = {
+          vegetarianMeals: vegetarianData ? Object.values(vegetarianData) : [],
+          desiMeals: desiData ? Object.values(desiData) : [],
+          fastFoodMeals: fastFoodData ? Object.values(fastFoodData) : [],
+        };
+
+        setMeals(formattedMeals);
+
+        // Cache data in localStorage
+        localStorage.setItem("meals", JSON.stringify(formattedMeals));
+        localStorage.setItem("cacheTime", Date.now());
+      }
+    } catch (error) {
+      console.error("Error fetching meals:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchMeals();
   }, []);
 

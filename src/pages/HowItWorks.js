@@ -3,18 +3,37 @@ import { realtimeDb } from "../firebase/Firebase";
 import { ref, get } from "firebase/database";
 import "./HowItWorks.css";
 
+const CACHE_EXPIRY_TIME = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
 const Howitworks = () => {
   const [steps1, setSteps1] = useState([]);
   const [steps2, setSteps2] = useState([]);
   const [steps3, setSteps3] = useState([]);
 
-  useEffect(() => {
-    const fetchSteps = async () => {
-      try {
-        const stepsRef1 = ref(realtimeDb, "howitwork/Image1");
-        const stepsRef2 = ref(realtimeDb, "howitwork/Image2");
-        const stepsRef3 = ref(realtimeDb, "howitwork/Image3");
+  const fetchSteps = async () => {
+    const stepsRef1 = ref(realtimeDb, "howitwork/Image1");
+    const stepsRef2 = ref(realtimeDb, "howitwork/Image2");
+    const stepsRef3 = ref(realtimeDb, "howitwork/Image3");
 
+    try {
+      // Check if cached data exists and is valid
+      const cachedSteps1 = JSON.parse(localStorage.getItem("steps1"));
+      const cachedSteps2 = JSON.parse(localStorage.getItem("steps2"));
+      const cachedSteps3 = JSON.parse(localStorage.getItem("steps3"));
+      const cacheTime = localStorage.getItem("cacheTime");
+
+      if (
+        cachedSteps1 &&
+        cachedSteps2 &&
+        cachedSteps3 &&
+        cacheTime &&
+        Date.now() - cacheTime < CACHE_EXPIRY_TIME
+      ) {
+        setSteps1(cachedSteps1);
+        setSteps2(cachedSteps2);
+        setSteps3(cachedSteps3);
+      } else {
+        // Fetch data from Firebase
         const snapshot1 = await get(stepsRef1);
         const snapshot2 = await get(stepsRef2);
         const snapshot3 = await get(stepsRef3);
@@ -22,23 +41,28 @@ const Howitworks = () => {
         const data1 = snapshot1.val();
         const data2 = snapshot2.val();
         const data3 = snapshot3.val();
-        if (data1) {
-          const formattedSteps1 = Object.values(data1);
-          setSteps1(formattedSteps1);
-        }
-        if (data2) {
-          const formattedSteps2 = Object.values(data2);
-          setSteps2(formattedSteps2);
-        }
-        if (data3) {
-          const formattedSteps3 = Object.values(data3);
-          setSteps3(formattedSteps3);
-        }
-      } catch (error) {
-        console.error("Error fetching steps:", error);
-      }
-    };
 
+        const formattedSteps1 = data1 ? Object.values(data1) : [];
+        const formattedSteps2 = data2 ? Object.values(data2) : [];
+        const formattedSteps3 = data3 ? Object.values(data3) : [];
+
+        // Set data in state
+        setSteps1(formattedSteps1);
+        setSteps2(formattedSteps2);
+        setSteps3(formattedSteps3);
+
+        // Cache data in localStorage
+        localStorage.setItem("steps1", JSON.stringify(formattedSteps1));
+        localStorage.setItem("steps2", JSON.stringify(formattedSteps2));
+        localStorage.setItem("steps3", JSON.stringify(formattedSteps3));
+        localStorage.setItem("cacheTime", Date.now());
+      }
+    } catch (error) {
+      console.error("Error fetching steps:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchSteps();
   }, []);
 
@@ -50,8 +74,6 @@ const Howitworks = () => {
         </h2>
       </div>
       <div className="containers grid-2-cols">
-        {/*           <!-- step 01 --> */}
-
         {steps1.map((step, index) => (
           <React.Fragment key={index}>
             <div className="step-text-box">
@@ -65,8 +87,6 @@ const Howitworks = () => {
           </React.Fragment>
         ))}
 
-        {/*           <!-- step 02 --> */}
-
         {steps2.map((step2, index) => (
           <React.Fragment key={index}>
             <div className="step-img-box">
@@ -79,8 +99,6 @@ const Howitworks = () => {
             </div>
           </React.Fragment>
         ))}
-
-        {/*           <!-- step 03 --> */}
 
         {steps3.map((step3, index) => (
           <React.Fragment key={index}>
