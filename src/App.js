@@ -19,6 +19,7 @@ import { CreditCard } from "./pages/CreditCard";
 import Jazzcash from "./pages/Jazzcash";
 import Easypaisa from "./pages/Easypaisa";
 import Address from "./pages/Address";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
+        <Route path="/productdetails" element={<ProductDetails />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/howitworks" element={<HowItWorks />} />
         <Route path="/user" element={<User />} />

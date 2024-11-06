@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { AddToCartContext } from "../context/AddToCart";
 import { realtimeDb } from "../firebase/Firebase";
 import { ref, get } from "firebase/database";
+import { NavLink } from "react-router-dom";
 import "./Menu.css";
 
 const CACHE_EXPIRY_TIME = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 const Menu = () => {
-  const { addToCart } = useContext(AddToCartContext);
+  const { addToCart, setSelectedProduct } = useContext(AddToCartContext);
   const [meals, setMeals] = useState({
     vegetarianMeals: [],
     desiMeals: [],
@@ -15,12 +16,12 @@ const Menu = () => {
   });
 
   const fetchMeals = async () => {
-    const vegetarianRef = ref(realtimeDb, "meals/vegetarian");
-    const desiRef = ref(realtimeDb, "meals/desi");
-    const fastFoodRef = ref(realtimeDb, "meals/fastfood");
+    const vegetarianRef = ref(realtimeDb, "ProductDetails/vegetarian");
+    const desiRef = ref(realtimeDb, "ProductDetails/desi");
+    const fastFoodRef = ref(realtimeDb, "ProductDetails/fastfood");
 
     try {
-      const cachedMeals = JSON.parse(localStorage.getItem("meals"));
+      const cachedMeals = JSON.parse(localStorage.getItem("ProductDetails"));
       const cacheTime = localStorage.getItem("cacheTime");
 
       // If cached data exists and is not expired, use it
@@ -49,7 +50,7 @@ const Menu = () => {
         setMeals(formattedMeals);
 
         // Cache data in localStorage
-        localStorage.setItem("meals", JSON.stringify(formattedMeals));
+        localStorage.setItem("ProductDetails", JSON.stringify(formattedMeals));
         localStorage.setItem("cacheTime", Date.now());
       }
     } catch (error) {
@@ -61,6 +62,9 @@ const Menu = () => {
     fetchMeals();
   }, []);
 
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+  };
   return (
     <section className="menu-section">
       <h2 className="menu-heading">Our Menu</h2>
@@ -70,8 +74,18 @@ const Menu = () => {
         <h3 className="menu-subheading">Vegetarian Meals</h3>
         <div className="menu-items">
           {meals.vegetarianMeals.map((meal) => (
-            <div key={meal.id} className="menu-item">
-              <img src={meal.img} alt={meal.title} className="menu-item-img" />
+            <div
+              key={meal.id}
+              onClick={() => handleProductClick(meal)}
+              className="menu-item"
+            >
+              <NavLink to={"/productdetails"}>
+                <img
+                  src={meal.img1}
+                  alt={meal.title}
+                  className="menu-item-img"
+                />
+              </NavLink>
               <h4 className="menu-item-title">{meal.title}</h4>
               <p className="menu-item-detail">{meal.detail}</p>
               <p className="menu-item-price">Rs {meal.price}</p>
@@ -91,8 +105,18 @@ const Menu = () => {
         <h3 className="menu-subheading">Desi Meals</h3>
         <div className="menu-items">
           {meals.desiMeals.map((food) => (
-            <div key={food.id} className="menu-item">
-              <img src={food.img} alt={food.title} className="menu-item-img" />
+            <div
+              key={food.id}
+              onClick={() => handleProductClick(food)}
+              className="menu-item"
+            >
+              <NavLink to={"/productdetails"}>
+                <img
+                  src={food.img1}
+                  alt={food.title}
+                  className="menu-item-img"
+                />
+              </NavLink>
               <h4 className="menu-item-title">{food.title}</h4>
               <p className="menu-item-detail">{food.detail}</p>
               <p className="menu-item-price">Rs {food.price}</p>
@@ -112,8 +136,18 @@ const Menu = () => {
         <h3 className="menu-subheading">Fast Food Meals</h3>
         <div className="menu-items">
           {meals.fastFoodMeals.map((meal) => (
-            <div key={meal.id} className="menu-item">
-              <img src={meal.img} alt={meal.title} className="menu-item-img" />
+            <div
+              key={meal.id}
+              onClick={() => handleProductClick(meal)}
+              className="menu-item"
+            >
+              <NavLink to={"/productdetails"}>
+                <img
+                  src={meal.img1}
+                  alt={meal.title}
+                  className="menu-item-img"
+                />
+              </NavLink>
               <h4 className="menu-item-title">{meal.title}</h4>
               <p className="menu-item-detail">{meal.detail}</p>
               <p className="menu-item-price">Rs {meal.price}</p>

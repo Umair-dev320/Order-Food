@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signInWithPopup,
-  signOut, //
+  signOut,
   GoogleAuthProvider,
 } from "firebase/auth";
 import { auth, db } from "../firebase/Firebase";
@@ -22,6 +22,7 @@ export const AddToCartProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const navigate = useNavigate();
 
   // Check for user authentication state
@@ -29,12 +30,10 @@ export const AddToCartProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-
         // Fetch additional profile data if needed
         setUserProfile({
           name: user.displayName,
           email: user.email,
-          password: user.password || "",
         });
       } else {
         setUser(null);
@@ -65,7 +64,6 @@ export const AddToCartProvider = ({ children }) => {
       const existingItem = prevItems.find(
         (cartItem) => cartItem.id === item.id
       );
-
       if (existingItem) {
         return prevItems.map((cartItem) =>
           cartItem.id === item.id
@@ -94,14 +92,11 @@ export const AddToCartProvider = ({ children }) => {
         password
       );
       const user = userCredential.user;
-      console.log("User created:", user);
-
       await addDoc(collection(db, "Register Users"), {
         uid: user.uid,
         email: user.email,
         displayName: user.displayName || "",
       });
-
       alert("User signed up successfully!");
       navigate("/user");
       return user;
@@ -132,7 +127,6 @@ export const AddToCartProvider = ({ children }) => {
     setLoading(true);
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log("Google sign-in successful:", result.user);
       navigate("/userprofile"); // Navigate to profile after Google login
       return result.user;
     } catch (error) {
@@ -149,7 +143,7 @@ export const AddToCartProvider = ({ children }) => {
     try {
       await signOut(auth);
       setUser(null);
-      setCartItems([]);
+      setCartItems([]); // Clear cart on logout
       navigate("/login"); // Redirect to login page after logout
       alert("User logged out successfully!");
     } catch (error) {
@@ -185,11 +179,10 @@ export const AddToCartProvider = ({ children }) => {
     setCartItems((prevItems) =>
       prevItems.filter((cartItem) => cartItem.id !== itemId)
     );
-    setCartItemCount((prevCount) => prevCount - 1);
+    setCartItemCount((prevCount) => prevCount - prevCount);
   };
 
   const isLoggedIn = user ? true : false; // Login status
-  // const isLoggedOut = user ? false : true; // Logout status
 
   return (
     <AddToCartContext.Provider
@@ -204,11 +197,12 @@ export const AddToCartProvider = ({ children }) => {
         increaseQuantity,
         deleteItem,
         isLoggedIn,
-        // isLoggedOut,
         logout,
         signinWithGoogle,
         loading,
         userProfile,
+        selectedProduct,
+        setSelectedProduct,
       }}
     >
       {children}
