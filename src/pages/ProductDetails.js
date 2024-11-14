@@ -49,15 +49,27 @@ const ProductDetails = () => {
 
       {/* Product details */}
       <div className="product-des">
-        <h1>Title: {selectedProduct.title}</h1>
-        <p>Description: {selectedProduct.detail}</p>
-        <h4>Price: Rs {selectedProduct.price}</h4>
-        <h4>Calories: {selectedProduct.calories}</h4>
-        <h4>Cooking Time: {selectedProduct.cookingTime}</h4>
-        <h4>Category: {selectedProduct.category}</h4>
-        <h4>Ratings: {selectedProduct.ratings}</h4>
-        <h4>Spice Level: {selectedProduct.spiceLevel}</h4>
-        <h4>Availability: {selectedProduct.availability}</h4>
+        <h1 className="product-title">{selectedProduct.title}</h1>
+        <p className="product-description">
+          Description: {selectedProduct.detail}
+        </p>
+        <h4 className="product-price">Price: Rs {selectedProduct.price}</h4>
+        <h4 className="product-calories">
+          Calories: {selectedProduct.calories}
+        </h4>
+        <h4 className="product-cooktime">
+          Cooking Time: {selectedProduct.cookingTime}
+        </h4>
+        <h4 className="product-category">
+          Category: {selectedProduct.category}
+        </h4>
+        <h4 className="product-rating">Ratings: {selectedProduct.ratings}</h4>
+        <h4 className="product-spicelevel">
+          Spice Level: {selectedProduct.spiceLevel}
+        </h4>
+        <h4 className="product-available">
+          Availability: {selectedProduct.availability}
+        </h4>
         <button
           className="me-item-button"
           onClick={() => addToCart(selectedProduct)}
@@ -71,7 +83,7 @@ const ProductDetails = () => {
               <div className="carting-item-quantity">
                 <button
                   onClick={() => deleteItem(id)}
-                  className="quantityDelete-button"
+                  className="Delete-button"
                 >
                   <FaTrashAlt />
                 </button>

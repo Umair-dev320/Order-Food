@@ -127,7 +127,7 @@ export const AddToCartProvider = ({ children }) => {
     setLoading(true);
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      navigate("/userprofile"); // Navigate to profile after Google login
+      navigate("/user"); // Navigate to profile after Google login
       return result.user;
     } catch (error) {
       console.error("Error signing in with Google:", error);
@@ -144,7 +144,7 @@ export const AddToCartProvider = ({ children }) => {
       await signOut(auth);
       setUser(null);
       setCartItems([]); // Clear cart on logout
-      navigate("/login"); // Redirect to login page after logout
+      navigate("/"); // Redirect to login page after logout
       alert("User logged out successfully!");
     } catch (error) {
       console.error("Error logging out:", error);

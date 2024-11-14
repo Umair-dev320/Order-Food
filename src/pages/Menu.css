@@ -20,6 +20,28 @@
   color: #555;
 }
 
+.category-dropdown {
+  display: flex;
+  justify-content: right;
+  margin-bottom: 20px;
+}
+
+.category-dropdown select {
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.3s;
+}
+
+.category-dropdown select:hover {
+  border-color: #ff6347;
+}
+
 .menu-items {
   display: flex;
   gap: 1.5rem;

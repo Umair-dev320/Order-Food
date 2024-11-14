@@ -14,6 +14,7 @@ const Menu = () => {
     desiMeals: [],
     fastFoodMeals: [],
   });
+  const [selectedCategory, setSelectedCategory] = useState("All Food");
 
   const fetchMeals = async () => {
     const vegetarianRef = ref(realtimeDb, "ProductDetails/vegetarian");
@@ -24,7 +25,6 @@ const Menu = () => {
       const cachedMeals = JSON.parse(localStorage.getItem("ProductDetails"));
       const cacheTime = localStorage.getItem("cacheTime");
 
-      // If cached data exists and is not expired, use it
       if (
         cachedMeals &&
         cacheTime &&
@@ -32,7 +32,6 @@ const Menu = () => {
       ) {
         setMeals(cachedMeals);
       } else {
-        // Fetch data from Firebase
         const vegetarianSnapshot = await get(vegetarianRef);
         const desiSnapshot = await get(desiRef);
         const fastFoodSnapshot = await get(fastFoodRef);
@@ -48,8 +47,6 @@ const Menu = () => {
         };
 
         setMeals(formattedMeals);
-
-        // Cache data in localStorage
         localStorage.setItem("ProductDetails", JSON.stringify(formattedMeals));
         localStorage.setItem("cacheTime", Date.now());
       }
@@ -65,101 +62,67 @@ const Menu = () => {
   const handleProductClick = (product) => {
     setSelectedProduct(product);
   };
+
+  const renderMeals = (category, items) => (
+    <>
+      <h3 className="menu-subheading">{category}</h3>
+      <div className="menu-items">
+        {items.map((meal) => (
+          <div
+            key={meal.id}
+            onClick={() => handleProductClick(meal)}
+            className="menu-item"
+          >
+            <NavLink to={"/productdetails"}>
+              <img src={meal.img1} alt={meal.title} className="menu-item-img" />
+            </NavLink>
+            <h4 className="menu-item-title">{meal.title}</h4>
+            <p className="menu-item-detail">{meal.detail}</p>
+            <p className="menu-item-price">Rs {meal.price}</p>
+            <button
+              className="menu-item-button"
+              onClick={() => addToCart(meal)}
+            >
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+
   return (
     <section className="menu-section">
       <h2 className="menu-heading">Our Menu</h2>
 
-      {/* Vegetarian Meals */}
-      <div className="menu-category">
-        <h3 className="menu-subheading">Vegetarian Meals</h3>
-        <div className="menu-items">
-          {meals.vegetarianMeals.map((meal) => (
-            <div
-              key={meal.id}
-              onClick={() => handleProductClick(meal)}
-              className="menu-item"
-            >
-              <NavLink to={"/productdetails"}>
-                <img
-                  src={meal.img1}
-                  alt={meal.title}
-                  className="menu-item-img"
-                />
-              </NavLink>
-              <h4 className="menu-item-title">{meal.title}</h4>
-              <p className="menu-item-detail">{meal.detail}</p>
-              <p className="menu-item-price">Rs {meal.price}</p>
-              <button
-                className="menu-item-button"
-                onClick={() => addToCart(meal)}
-              >
-                Add to Cart
-              </button>
-            </div>
-          ))}
-        </div>
+      {/* Category Dropdown */}
+      <div className="category-dropdown">
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          <option value="All Food">All Food</option>
+          <option value="Vegetarian">Vegetarian</option>
+          <option value="Desi">Desi</option>
+          <option value="Fast Food">Fast Food</option>
+        </select>
       </div>
 
-      {/* Desi Meals */}
-      <div className="menu-category">
-        <h3 className="menu-subheading">Desi Meals</h3>
-        <div className="menu-items">
-          {meals.desiMeals.map((food) => (
-            <div
-              key={food.id}
-              onClick={() => handleProductClick(food)}
-              className="menu-item"
-            >
-              <NavLink to={"/productdetails"}>
-                <img
-                  src={food.img1}
-                  alt={food.title}
-                  className="menu-item-img"
-                />
-              </NavLink>
-              <h4 className="menu-item-title">{food.title}</h4>
-              <p className="menu-item-detail">{food.detail}</p>
-              <p className="menu-item-price">Rs {food.price}</p>
-              <button
-                className="menu-item-button"
-                onClick={() => addToCart(food)}
-              >
-                Add to Cart
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Fast Food Meals */}
-      <div className="menu-category">
-        <h3 className="menu-subheading">Fast Food Meals</h3>
-        <div className="menu-items">
-          {meals.fastFoodMeals.map((meal) => (
-            <div
-              key={meal.id}
-              onClick={() => handleProductClick(meal)}
-              className="menu-item"
-            >
-              <NavLink to={"/productdetails"}>
-                <img
-                  src={meal.img1}
-                  alt={meal.title}
-                  className="menu-item-img"
-                />
-              </NavLink>
-              <h4 className="menu-item-title">{meal.title}</h4>
-              <p className="menu-item-detail">{meal.detail}</p>
-              <p className="menu-item-price">Rs {meal.price}</p>
-              <button
-                className="menu-item-button"
-                onClick={() => addToCart(meal)}
-              >
-                Add to Cart
-              </button>
-            </div>
-          ))}
-        </div>
+      {/* Render Meals Based on Selected Category */}
+      <div className="menu-content">
+        {selectedCategory === "All Food" && (
+          <>
+            {renderMeals("Vegetarian Meals", meals.vegetarianMeals)}
+            {renderMeals("Desi Meals", meals.desiMeals)}
+            {renderMeals("Fast Food Meals", meals.fastFoodMeals)}
+          </>
+        )}
+        {selectedCategory === "Vegetarian" &&
+          renderMeals("Vegetarian Meals", meals.vegetarianMeals)}
+        {selectedCategory === "Desi" &&
+          renderMeals("Desi Meals", meals.desiMeals)}
+        {selectedCategory === "Fast Food" &&
+          renderMeals("Fast Food Meals", meals.fastFoodMeals)}
       </div>
     </section>
   );
