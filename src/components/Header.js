@@ -15,8 +15,13 @@ import { AddToCartContext } from "../context/AddToCart";
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   // Get the cart value from context
-  const { cartItemCount, isLoggedIn } = useContext(AddToCartContext);
-
+  const { cartItemCount, isLoggedIn, logout } = useContext(AddToCartContext);
+  const [showLogout, setShowLogout] = useState(false);
+  const toggleLogout = () => setShowLogout((prev) => !prev);
+  const handleLogout = () => {
+    logout(); // Log out the user
+    setShowLogout(false); // Close the dropdown
+  };
   useEffect(() => {
     // Initialize AOS
     AOS.init({
@@ -43,7 +48,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/"
-                activeClassName="active"
+                activeclassname="active"
                 className="main-nav-link"
                 onClick={closeMenu}
               >
@@ -53,7 +58,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/menu"
-                activeClassName="active"
+                activeclassname="active"
                 className="main-nav-link"
                 onClick={closeMenu}
               >
@@ -63,7 +68,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/howitworks"
-                activeClassName="active"
+                activeclassname="active"
                 className="main-nav-link"
                 onClick={closeMenu}
               >
@@ -73,7 +78,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/pricing"
-                activeClassName="active"
+                activeclassname="active"
                 className="main-nav-link"
                 onClick={closeMenu}
               >
@@ -83,7 +88,7 @@ const Header = () => {
             <li>
               <NavLink
                 to="/cart"
-                activeClassName="active"
+                activenlassname="active"
                 className="main-nav-link cart-icon-link"
                 onClick={closeMenu}
               >
@@ -94,42 +99,51 @@ const Header = () => {
                 )}
               </NavLink>
             </li>
-            {/* Conditionally render if the user is logged in */}
-            {isLoggedIn && (
-              <li>
-                <NavLink
-                  to="/user"
-                  activeClassName="active"
-                  className="main-nav-link"
-                  onClick={closeMenu}
-                >
-                  {Image ? (
-                    <img
-                      src={Image}
-                      alt="User Profile"
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "50%",
-                        objectFit: "cover",
-                      }}
-                    />
-                  ) : (
-                    <FaUserCircle size={20} />
+            <ul className="main-nav-list">
+              {isLoggedIn && (
+                <li className="profile-container">
+                  <NavLink
+                    to="/user"
+                    activeclassname="active"
+                    className="main-nav-link"
+                    onClick={closeMenu}
+                  >
+                    <div onClick={toggleLogout} className="profile-icon">
+                      {Image ? (
+                        <img
+                          src={Image}
+                          alt="User Profile"
+                          style={{
+                            width: "30px",
+                            height: "30px",
+                            borderRadius: "50%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      ) : (
+                        <FaUserCircle size={20} />
+                      )}
+                    </div>
+                  </NavLink>
+                  {/* Logout button dropdown */}
+                  {showLogout && (
+                    <div className="logout-dropdown">
+                      <button onClick={handleLogout}>Logout</button>
+                    </div>
                   )}
-                </NavLink>
-              </li>
-            )}
-            <li>
+                </li>
+              )}
+            </ul>
+            <div>
               <NavLink
                 to="/login"
-                activeClassName="active"
+                activeclassname="active"
                 className="main-nav-link nav-cta"
                 onClick={closeMenu}
               >
                 Try for Free
               </NavLink>
-            </li>
+            </div>
           </ul>
         </nav>
         <button className="menu-toggle" onClick={toggleMenu}>

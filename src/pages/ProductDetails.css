@@ -1,0 +1,122 @@
+.product-detail {
+  display: flex;
+  flex-wrap: nowrap;
+  max-width: 1200px;
+  padding: 20px;
+  gap: 20px;
+}
+
+.product-image {
+  flex: 0 0 60%;
+  display: flex;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  height: 65%;
+}
+
+.product-image img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.product-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  align-items: center;
+  margin-left: 8rem;
+}
+
+.product-images img {
+  width: 60%;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.product-images img:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.product-des {
+  width: 100%;
+  /* height: 90%; */
+  text-align: left;
+  margin-top: 20px;
+  border-radius: 8px;
+}
+
+.product-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  color: #333;
+  text-align: center;
+}
+.product-description {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 15px;
+}
+.product-price,
+.product-calories,
+.product-cooktime,
+.product-category,
+.product-rating,
+.product-spicelevel,
+.product-available {
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #666;
+  margin: 5px 0;
+}
+/* Add to Cart Button */
+.me-item-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.me-item-button:hover {
+  background-color: #218838;
+}
+
+/* Carting Section */
+.carting {
+  margin-top: 20px;
+}
+
+.carting-item {
+  display: flex;
+  align-items: left;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+}
+
+.carting-item-quantity {
+  margin-right: auto;
+}
+
+.Delete-button {
+  background: none;
+  border: none;
+  color: #d9534f;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.Delete-button:hover {
+  color: #c9302c;
+}

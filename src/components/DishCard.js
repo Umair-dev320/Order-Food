@@ -9,6 +9,7 @@ import { realtimeDb } from "../firebase/Firebase";
 import { ref, get } from "firebase/database";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { NavLink } from "react-router-dom";
 
 const DishCard = () => {
   const [dishCard, setDishCard] = useState([]);
@@ -16,7 +17,7 @@ const DishCard = () => {
   useEffect(() => {
     // Initialize AOS
     AOS.init({
-      duration: 1000, // Set the duration for the animations
+      duration: 1000, // duration for the animations
     });
 
     const fetchMeals = async () => {
@@ -54,7 +55,9 @@ const DishCard = () => {
             data-aos-easing="ease-out-cubic"
             data-aos-duration="2000"
           >
-            <img src={meal.img} className="meal-img" alt={meal.alt} />
+            <NavLink to={"/menu"}>
+              <img src={meal.img} className="meal-img" alt={meal.alt} />
+            </NavLink>
             <div className="meal-content">
               <div className="meal-tags">
                 <span className="tag tag--name">{meal.veg}</span>
