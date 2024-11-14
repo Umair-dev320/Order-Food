@@ -51,24 +51,36 @@ const ProductDetails = () => {
       <div className="product-des">
         <h1 className="product-title">{selectedProduct.title}</h1>
         <p className="product-description">
-          Description: {selectedProduct.detail}
+          <span className="product-descrip">Description:</span>{" "}
+          {selectedProduct.detail}
         </p>
-        <h4 className="product-price">Price: Rs {selectedProduct.price}</h4>
+        <h4 className="product-price">
+          <span className="product-over">Price: Rs</span>{" "}
+          {selectedProduct.price}
+        </h4>
         <h4 className="product-calories">
-          Calories: {selectedProduct.calories}
+          <span className="product-over"> Calories: </span>
+          {selectedProduct.calories}
         </h4>
         <h4 className="product-cooktime">
-          Cooking Time: {selectedProduct.cookingTime}
+          <span className="product-over"> Cooking Time: </span>{" "}
+          {selectedProduct.cookingTime}
         </h4>
         <h4 className="product-category">
-          Category: {selectedProduct.category}
+          <span className="product-over">Category:</span>{" "}
+          {selectedProduct.category}
         </h4>
-        <h4 className="product-rating">Ratings: {selectedProduct.ratings}</h4>
+        <h4 className="product-rating">
+          <span className="product-over"> Ratings: </span>
+          {selectedProduct.ratings}
+        </h4>
         <h4 className="product-spicelevel">
-          Spice Level: {selectedProduct.spiceLevel}
+          <span className="product-over">Spice Level:</span>{" "}
+          {selectedProduct.spiceLevel}
         </h4>
         <h4 className="product-available">
-          Availability: {selectedProduct.availability}
+          <span className="product-over">Availability: </span>
+          {selectedProduct.availability}
         </h4>
         <button
           className="me-item-button"
@@ -86,6 +98,7 @@ const ProductDetails = () => {
                   className="Delete-button"
                 >
                   <FaTrashAlt />
+                  deleteItem
                 </button>
               </div>
             </div>
