@@ -14,7 +14,7 @@ const Menu = () => {
     desiMeals: [],
     fastFoodMeals: [],
   });
-  const [selectedCategory, setSelectedCategory] = useState("All Food");
+  const [selectedCategory, setSelectedCategory] = useState("AllFood");
 
   const fetchMeals = async () => {
     const vegetarianRef = ref(realtimeDb, "ProductDetails/vegetarian");
@@ -41,9 +41,9 @@ const Menu = () => {
         const fastFoodData = fastFoodSnapshot.val();
 
         const formattedMeals = {
-          vegetarianMeals: vegetarianData ? Object.values(vegetarianData) : [],
-          desiMeals: desiData ? Object.values(desiData) : [],
-          fastFoodMeals: fastFoodData ? Object.values(fastFoodData) : [],
+          vegetarianMeals: vegetarianData || [], // Already arrays
+          desiMeals: desiData || [],
+          fastFoodMeals: fastFoodData || [],
         };
 
         setMeals(formattedMeals);
@@ -81,7 +81,10 @@ const Menu = () => {
             <p className="menu-item-price">Rs {meal.price}</p>
             <button
               className="menu-item-button"
-              onClick={() => addToCart(meal)}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent parent click event
+                addToCart(meal);
+              }}
             >
               Add to Cart
             </button>
@@ -101,7 +104,7 @@ const Menu = () => {
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
         >
-          <option value="All Food">All Food</option>
+          <option value="AllFood">All Food</option>
           <option value="Vegetarian">Vegetarian</option>
           <option value="Desi">Desi</option>
           <option value="Fast Food">Fast Food</option>
@@ -110,7 +113,7 @@ const Menu = () => {
 
       {/* Render Meals Based on Selected Category */}
       <div className="menu-content">
-        {selectedCategory === "All Food" && (
+        {selectedCategory === "AllFood" && (
           <>
             {renderMeals("Vegetarian Meals", meals.vegetarianMeals)}
             {renderMeals("Desi Meals", meals.desiMeals)}
