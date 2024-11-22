@@ -45,7 +45,7 @@ const Menu = () => {
           desiMeals: desiData || [],
           fastFoodMeals: fastFoodData || [],
         };
-        // ok
+
         setMeals(formattedMeals);
         localStorage.setItem("ProductDetails", JSON.stringify(formattedMeals));
         localStorage.setItem("cacheTime", Date.now());
