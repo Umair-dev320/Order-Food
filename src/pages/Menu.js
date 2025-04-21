@@ -41,9 +41,9 @@ const Menu = () => {
         const fastFoodData = fastFoodSnapshot.val();
 
         const formattedMeals = {
-          vegetarianMeals: vegetarianData || [], // Already arrays
-          desiMeals: desiData || [],
-          fastFoodMeals: fastFoodData || [],
+          vegetarianMeals: vegetarianData,
+          desiMeals: desiData,
+          fastFoodMeals: fastFoodData,
         };
 
         setMeals(formattedMeals);
@@ -74,7 +74,11 @@ const Menu = () => {
             className="menu-item"
           >
             <NavLink to={"/productdetails"}>
-              <img src={meal.img1} alt={meal.title} className="menu-item-img" />
+              <img
+                src={meal.img1 || meal.img}
+                alt={meal.title}
+                className="menu-item-img"
+              />
             </NavLink>
             <h4 className="menu-item-title">{meal.title}</h4>
             <p className="menu-item-detail">{meal.detail}</p>

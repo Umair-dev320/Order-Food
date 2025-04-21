@@ -8,7 +8,7 @@ const ProductDetails = () => {
     useContext(AddToCartContext);
 
   const [selectedImage, setSelectedImage] = useState(
-    selectedProduct ? selectedProduct.img1 : ""
+    selectedProduct?.img1 || selectedProduct?.img || ""
   );
 
   if (!selectedProduct) return <div>Select a product to see details</div>;
@@ -18,10 +18,10 @@ const ProductDetails = () => {
   };
 
   const images = [
-    selectedProduct.img2,
-    selectedProduct.img3,
-    selectedProduct.img4,
-  ];
+    selectedProduct.img2 || selectedProduct.img,
+    selectedProduct.img3 || selectedProduct.img,
+    selectedProduct.img4 || selectedProduct.img,
+  ].filter(Boolean); // remove any undefined/null values
 
   return (
     <div className="product-detail">
