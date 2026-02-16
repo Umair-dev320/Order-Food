@@ -49,6 +49,6 @@
   },
   "devDependencies": {
     "react-scripts": "^5.0.1",
-    "webpack": "^5.97.1"
+    "webpack": "^5.105.2"
   }
 }
